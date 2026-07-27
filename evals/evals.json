@@ -1,0 +1,41 @@
+{
+  "skill_name": "uipath-skills",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Uso UiPath Studio 2024.10 LTS com projeto Windows. Preciso ler uma planilha Excel, filtrar as linhas com Status = Pendente e salvar o resultado em outra aba. Quais pacotes e atividades oficiais devo usar? Informe compatibilidade, versão recomendada e um desenho do workflow.",
+      "expected_output": "Recomendação verificável do pacote Excel oficial, atividades adequadas, compatibilidade com projeto Windows e sequência do workflow sem inventar propriedades.",
+      "files": [],
+      "expectations": [
+        "A resposta identifica o pacote oficial de Excel e distingue pacote de atividade.",
+        "A recomendação considera Studio 2024.10 LTS e projeto Windows.",
+        "A resposta apresenta fontes oficiais e data da consulta para afirmações mutáveis.",
+        "O workflow inclui leitura, filtragem e escrita, além de validação e tratamento de erros."
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Tenho um projeto UiPath Windows-Legacy em Studio 2023.10. Quero atualizar UiPath.IntelligentOCR.Activities para a versão mais nova. Posso fazer isso diretamente? Analise suporte, compatibilidade e proponha uma migração segura.",
+      "expected_output": "Diagnóstico que não confunda versão publicada com suportada e reconheça mudanças de compatibilidade do Intelligent OCR em versões recentes.",
+      "files": [],
+      "expectations": [
+        "A resposta verifica separadamente versão publicada, suporte e compatibilidade.",
+        "A resposta identifica o risco específico de Windows-Legacy.",
+        "A migração proposta evita recomendar atualização cega ou downgrade como primeira opção.",
+        "As conclusões mutáveis são sustentadas por documentação oficial."
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "No Studio 2025.10 LTS, projeto Cross-platform, preciso monitorar novos arquivos no Google Drive e registrar os metadados em uma fila do Orchestrator. Compare as atividades oficiais possíveis, diga quais dependências entram no project.json e proponha o fluxo.",
+      "expected_output": "Solução atual que trate Integration Service e dependências unificadas corretamente, valide a disponibilidade Cross-platform e não invente IDs ou versões.",
+      "files": [],
+      "expectations": [
+        "A resposta considera o modelo atual do Integration Service.",
+        "A resposta verifica Cross-platform e 2025.10 LTS.",
+        "Pacotes, dependências e atividades são apresentados como conceitos distintos.",
+        "O fluxo inclui autenticação, trigger ou polling, criação do item de fila, idempotência e tratamento de falhas."
+      ]
+    }
+  ]
+}
