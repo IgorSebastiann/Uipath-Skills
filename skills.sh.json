@@ -1,0 +1,13 @@
+{
+  "$schema": "https://skills.sh/schemas/skills.sh.schema.json",
+  "notGrouped": "bottom",
+  "groupings": [
+    {
+      "title": "UiPath Automation",
+      "description": "Official UiPath package, activity, compatibility, LTS, migration, and workflow guidance.",
+      "skills": [
+        "uipath-skills"
+      ]
+    }
+  ]
+}

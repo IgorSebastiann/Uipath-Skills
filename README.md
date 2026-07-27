@@ -1,40 +1,64 @@
 # UiPath Skills
 
-Skill reutilizável para ChatGPT e Codex que pesquisa, compara e recomenda pacotes e atividades oficiais do UiPath.
+**English** | [Português (Brasil)](README.pt-BR.md)
 
-Ela ajuda desenvolvedores de automações a escolher atividades, avaliar versões suportadas e LTS, verificar compatibilidade e desenhar workflows sem depender de um catálogo estático que rapidamente ficaria desatualizado.
+[![skills.sh](https://skills.sh/b/IgorSebastiann/Uipath-Skills)](https://skills.sh/IgorSebastiann/Uipath-Skills)
 
-## O que a skill faz
+An agent skill for researching, comparing, and recommending official UiPath packages and activities.
 
-- Pesquisa somente pacotes oficiais publicados pela UiPath.
-- Consulta versões estáveis disponíveis no feed NuGet oficial.
-- Prioriza versões atualmente suportadas e relacionadas às linhas LTS.
-- Verifica compatibilidade com:
-  - UiPath Studio e StudioX;
+It helps automation developers choose activities, evaluate supported and LTS versions, verify project compatibility, inspect dependencies, plan migrations, and design workflows without relying on a static catalog that quickly becomes outdated.
+
+## Quick install
+
+Run the interactive `skills` CLI:
+
+```bash
+npx skills add IgorSebastiann/Uipath-Skills
+```
+
+The installer displays the terminal interface, detects supported AI agents on your machine, and lets you choose the installation scope and method.
+
+To install `uipath-skills` globally for specific agents without prompts:
+
+```bash
+npx skills add IgorSebastiann/Uipath-Skills --skill uipath-skills --global --agent codex --agent claude-code --yes
+```
+
+The CLI supports Codex, Claude Code, Cursor, GitHub Copilot, Windsurf, Gemini CLI, Cline, OpenCode, and many other agents.
+
+## What this skill does
+
+- Searches only packages officially published and supported by UiPath.
+- Queries stable package versions from the official UiPath NuGet feed.
+- Prioritizes currently supported and LTS-aligned versions.
+- Checks compatibility with:
+  - UiPath Studio and StudioX;
   - Windows;
   - Windows - Legacy;
   - Cross-platform.
-- Compara atividades Modern e Classic.
-- Analisa dependências, requisitos e riscos de atualização.
-- Ajuda a selecionar atividades para um caso de uso.
-- Propõe a estrutura de workflows UiPath.
-- Analisa arquivos `project.json` e XAML fornecidos pelo usuário.
-- Orienta migrações de projetos e pacotes legados.
-- Consulta documentação, release notes e lifecycle oficiais antes de fazer afirmações sobre versões.
+- Compares Modern and Classic activities.
+- Evaluates dependencies, requirements, and upgrade risks.
+- Recommends packages and activities for specific automation scenarios.
+- Proposes UiPath workflow structures.
+- Inspects supplied `project.json` and XAML files.
+- Helps plan project and package migrations.
+- Verifies mutable version claims against official documentation, release notes, and lifecycle pages.
 
-## Escopo
+## Scope
 
-A skill cobre exclusivamente pacotes oficiais da UiPath.
+This skill covers official UiPath packages only.
 
-Pacotes de parceiros, Marketplace e comunidade não fazem parte do catálogo recomendado. A skill também não considera uma versão suportada apenas porque ela existe no feed: o status de suporte precisa ser confirmado no Activities Lifecycle ou nas release notes oficiais.
+Partner, Marketplace, and community packages are outside its recommendation scope. A version is not considered supported merely because it exists in a NuGet feed: support status must also be verified through UiPath Activities Lifecycle or official release notes.
 
-## Estrutura
+## Repository structure
 
 ```text
 Uipath-Skills/
 ├── SKILL.md
 ├── README.md
+├── README.pt-BR.md
 ├── LICENSE
+├── skills.sh.json
 ├── references/
 │   ├── official-sources.md
 │   └── package-map.md
@@ -44,281 +68,333 @@ Uipath-Skills/
     └── evals.json
 ```
 
-- `SKILL.md`: instruções principais carregadas pelo agente.
-- `references/official-sources.md`: mapa de fontes oficiais e regras de evidência.
-- `references/package-map.md`: índice funcional para descoberta de pacotes.
-- `scripts/query_uipath_feed.py`: consulta o feed NuGet oficial usando Python.
-- `evals/evals.json`: cenários usados para validar o comportamento da skill.
+- `SKILL.md`: core workflow loaded by the agent.
+- `references/official-sources.md`: official source map and evidence rules.
+- `references/package-map.md`: functional index for package discovery.
+- `scripts/query_uipath_feed.py`: queries the official UiPath NuGet feed.
+- `evals/evals.json`: realistic evaluation scenarios.
+- `skills.sh.json`: skills.sh repository-page configuration.
 
-## Requisitos
+## Requirements
 
-- ChatGPT com suporte a Skills ou uma instalação atual do Codex.
-- Acesso à internet para consultar documentação e versões atuais.
-- Python 3 para usar o script opcional de consulta ao feed.
-- Git, caso a instalação seja feita por clonagem.
+- An AI coding agent that supports Agent Skills.
+- Internet access for current documentation and package metadata.
+- Node.js with `npx` for interactive installation.
+- Python 3 for the optional NuGet feed query script.
+- Git only when installing manually.
 
-O script utiliza apenas a biblioteca padrão do Python e não exige instalação de pacotes adicionais.
+The Python script uses the standard library and requires no additional Python packages.
 
-## Instalação no Codex
+## Install with the skills CLI
 
-O padrão atual do Codex utiliza:
+### Interactive installation
 
-- `~/.agents/skills` para skills disponíveis ao usuário em qualquer projeto;
-- `.agents/skills` dentro de um repositório para skills compartilhadas somente naquele projeto.
-
-### Opção 1 — Skill Installer
-
-No Codex, solicite:
-
-```text
-$skill-installer Instale a skill do repositório https://github.com/IgorSebastiann/Uipath-Skills.git
+```bash
+npx skills add IgorSebastiann/Uipath-Skills
 ```
 
-Se a skill não aparecer imediatamente após a instalação, reinicie o Codex.
+The CLI will:
 
-### Opção 2 — Instalação global com Git
+1. discover `uipath-skills` from the repository;
+2. detect compatible agents installed on the machine;
+3. let you select project or global scope;
+4. let you select symlink or copy installation;
+5. install the skill into the correct agent directories.
 
-Esta opção deixa a skill disponível em todos os projetos do usuário.
+### List without installing
+
+```bash
+npx skills add IgorSebastiann/Uipath-Skills --list
+```
+
+### Install globally
+
+```bash
+npx skills add IgorSebastiann/Uipath-Skills --skill uipath-skills --global
+```
+
+### Install for Codex
+
+```bash
+npx skills add IgorSebastiann/Uipath-Skills --skill uipath-skills --agent codex
+```
+
+### Install for Claude Code
+
+```bash
+npx skills add IgorSebastiann/Uipath-Skills --skill uipath-skills --agent claude-code
+```
+
+### Install for multiple agents
+
+```bash
+npx skills add IgorSebastiann/Uipath-Skills \
+  --skill uipath-skills \
+  --agent codex \
+  --agent claude-code \
+  --agent cursor
+```
+
+### Install non-interactively
+
+Useful for setup scripts and CI environments:
+
+```bash
+npx skills add IgorSebastiann/Uipath-Skills \
+  --skill uipath-skills \
+  --global \
+  --agent codex \
+  --yes
+```
+
+### Use without installing
+
+Generate a temporary skill prompt:
+
+```bash
+npx skills use IgorSebastiann/Uipath-Skills --skill uipath-skills
+```
+
+### Manage the installation
+
+```bash
+# List installed skills
+npx skills list
+
+# Update this skill
+npx skills update uipath-skills
+
+# Remove this skill
+npx skills remove uipath-skills
+```
+
+## Manual installation
+
+### Codex — global
 
 #### Windows PowerShell
 
 ```powershell
-New-Item -ItemType Directory -Force "$HOME\.agents\skills" | Out-Null
-git clone https://github.com/IgorSebastiann/Uipath-Skills.git "$HOME\.agents\skills\uipath-skills"
+New-Item -ItemType Directory -Force "$HOME\.codex\skills" | Out-Null
+git clone https://github.com/IgorSebastiann/Uipath-Skills.git "$HOME\.codex\skills\uipath-skills"
 ```
 
-#### Linux ou macOS
+#### Linux or macOS
 
 ```bash
-mkdir -p ~/.agents/skills
-git clone https://github.com/IgorSebastiann/Uipath-Skills.git ~/.agents/skills/uipath-skills
+mkdir -p ~/.codex/skills
+git clone https://github.com/IgorSebastiann/Uipath-Skills.git ~/.codex/skills/uipath-skills
 ```
 
-### Opção 3 — Instalação em um único projeto
+### Codex — project scope
 
-Execute dentro da raiz do projeto no qual a skill deve ficar disponível:
+From the project root:
 
 ```bash
 mkdir -p .agents/skills
 git clone https://github.com/IgorSebastiann/Uipath-Skills.git .agents/skills/uipath-skills
 ```
 
-No Windows PowerShell:
-
-```powershell
-New-Item -ItemType Directory -Force ".agents\skills" | Out-Null
-git clone https://github.com/IgorSebastiann/Uipath-Skills.git ".agents\skills\uipath-skills"
-```
-
-Essa opção permite versionar a skill junto às convenções do projeto.
-
-## Atualização
-
-Se a instalação foi feita por Git:
+### Claude Code — global
 
 ```bash
-cd ~/.agents/skills/uipath-skills
-git pull
+mkdir -p ~/.claude/skills
+git clone https://github.com/IgorSebastiann/Uipath-Skills.git ~/.claude/skills/uipath-skills
 ```
 
-No Windows PowerShell:
+Restart the agent if the newly installed skill is not detected immediately.
 
-```powershell
-Set-Location "$HOME\.agents\skills\uipath-skills"
-git pull
-```
+## How to use
 
-## Como usar
+Skills can be activated explicitly or automatically.
 
-Skills podem ser acionadas explícita ou automaticamente.
+### Explicit invocation
 
-### Acionamento explícito
-
-No Codex CLI ou na extensão de IDE, mencione a skill com `$`:
+In Codex CLI or the IDE extension, mention the skill with `$`:
 
 ```text
 $uipath-skills
 
-Uso o UiPath Studio 2024.10 LTS em um projeto Windows.
-Preciso ler uma planilha Excel, filtrar registros pendentes e salvar o
-resultado em outra aba. Recomende os pacotes e atividades oficiais.
+I use UiPath Studio 2024.10 LTS with a Windows project.
+I need to read an Excel file, filter pending records, and save the result
+to another sheet. Recommend official packages and activities.
 ```
 
-Também é possível abrir o seletor com `/skills` e escolher `uipath-skills`.
+You can also run `/skills` and select `uipath-skills`.
 
-No ChatGPT com suporte a Skills, use `@` para selecionar a skill.
+In ChatGPT or another interface that supports skill mentions, select the skill using the interface's skill picker.
 
-### Acionamento automático
+### Automatic activation
 
-O agente pode selecionar a skill automaticamente quando a solicitação mencionar temas como:
+An agent may automatically select the skill when a request mentions:
 
-- UiPath Studio ou StudioX;
-- atividades UiPath;
-- pacotes `UiPath.*`;
-- versões LTS;
-- Windows, Windows-Legacy ou Cross-platform;
-- migração de pacotes;
+- UiPath Studio or StudioX;
+- UiPath activities;
+- `UiPath.*` packages;
+- LTS versions;
+- Windows, Windows-Legacy, or Cross-platform;
+- package migrations;
 - `project.json`;
-- workflows XAML;
-- compatibilidade ou dependências UiPath.
+- XAML workflows;
+- UiPath compatibility or dependencies.
 
-Exemplo:
-
-```text
-Tenho um projeto Windows-Legacy no Studio 2023.10.
-Posso atualizar UiPath.IntelligentOCR.Activities para a versão mais nova?
-Analise a compatibilidade e proponha uma migração segura.
-```
-
-## Exemplos de solicitações
-
-### Escolher atividades
+Example:
 
 ```text
-$uipath-skills
-
-Qual atividade oficial devo usar para ler emails com anexos, salvar apenas
-arquivos PDF e registrar os resultados em uma fila do Orchestrator?
-Meu projeto é Windows e uso Studio 2025.10 LTS.
+I have a Windows-Legacy project in Studio 2023.10.
+Can I update UiPath.IntelligentOCR.Activities to the newest version?
+Analyze compatibility and propose a safe migration.
 ```
 
-### Comparar versões
+## Example prompts
+
+### Choose activities
 
 ```text
 $uipath-skills
 
-Compare as versões suportadas de UiPath.Excel.Activities para Studio
-2024.10 LTS. Mostre compatibilidade, mudanças importantes e riscos de upgrade.
+Which official activities should I use to read emails with attachments,
+save only PDF files, and register the results in an Orchestrator queue?
+My project is Windows and uses Studio 2025.10 LTS.
 ```
 
-### Analisar um projeto
+### Compare versions
 
 ```text
 $uipath-skills
 
-Analise o project.json e os XAML deste projeto. Identifique pacotes fora de
-suporte, incompatibilidades e atividades que precisam ser modernizadas.
+Compare supported UiPath.Excel.Activities versions for Studio 2024.10 LTS.
+Show compatibility, important changes, and upgrade risks.
 ```
 
-Anexe ou disponibilize os arquivos do projeto para que a skill possa analisar as dependências reais.
-
-### Desenhar um workflow
+### Inspect a project
 
 ```text
 $uipath-skills
 
-Monte o desenho de um workflow Cross-platform que monitore novos arquivos no
-Google Drive, valide duplicidade e crie Queue Items no Orchestrator.
-Informe pacotes, atividades, argumentos, autenticação e tratamento de falhas.
+Inspect this project's project.json and XAML files. Identify unsupported
+packages, compatibility problems, and activities that should be modernized.
 ```
 
-## Informações que melhoram a resposta
+Provide the project files so the skill can inspect the actual dependencies.
 
-Sempre que possível, informe:
+### Design a workflow
 
-1. versão do UiPath Studio e Robot;
-2. linha LTS utilizada;
-3. tipo de projeto;
-4. perfil Studio ou StudioX;
-5. pacotes já instalados;
-6. objetivo da automação;
-7. restrições de ambiente, autenticação ou governança;
-8. arquivos `project.json`, XAML ou logs relevantes.
+```text
+$uipath-skills
 
-Se esses dados não forem fornecidos, a skill pode trabalhar com suposições, mas indicará quais delas afetam a recomendação.
+Design a Cross-platform workflow that monitors new Google Drive files,
+prevents duplicates, and creates Orchestrator Queue Items. Include packages,
+activities, arguments, authentication, and failure handling.
+```
 
-## Consulta manual ao feed oficial
+## Information that improves recommendations
 
-O script incluído permite verificar pacotes e versões publicadas no feed NuGet oficial.
+Whenever possible, provide:
 
-### Pesquisar pacotes
+1. UiPath Studio and Robot versions;
+2. the LTS product line;
+3. project compatibility type;
+4. Studio or StudioX profile;
+5. currently installed packages;
+6. automation goal;
+7. environment, authentication, or governance restrictions;
+8. relevant `project.json`, XAML, or log files.
+
+If some details are unavailable, the skill may work with assumptions while clearly identifying which assumptions affect the recommendation.
+
+## Query the official feed manually
+
+The bundled script queries packages and versions published to the official UiPath NuGet feed.
+
+### Search packages
 
 ```bash
 python scripts/query_uipath_feed.py search "Excel"
 ```
 
-### Listar versões
+### List versions
 
 ```bash
 python scripts/query_uipath_feed.py versions UiPath.Excel.Activities
 ```
 
-Incluindo versões preview:
+Include prerelease versions:
 
 ```bash
 python scripts/query_uipath_feed.py versions UiPath.Excel.Activities --prerelease
 ```
 
-### Consultar um pacote
+### Inspect a package
 
 ```bash
 python scripts/query_uipath_feed.py package UiPath.Excel.Activities
 ```
 
-Para incluir os metadados completos dos grupos de dependências:
+Include complete dependency-group metadata:
 
 ```bash
 python scripts/query_uipath_feed.py package UiPath.Excel.Activities --full
 ```
 
-O feed confirma que uma versão foi publicada. Para afirmar que ela está suportada ou ligada a uma LTS, consulte também o Activities Lifecycle e as release notes oficiais.
+The feed proves that a package version was published. It does not prove by itself that the version is currently supported or aligned with an LTS release.
 
-## Fontes utilizadas
+## Source priority
 
-A skill prioriza:
+The skill prioritizes:
 
-1. documentação oficial da atividade;
-2. página oficial de compatibilidade do pacote;
-3. release notes;
-4. Activities Lifecycle;
-5. Activities Overview;
-6. feed NuGet oficial da UiPath.
+1. official activity documentation;
+2. official package compatibility pages;
+3. package release notes;
+4. UiPath Activities Lifecycle;
+5. UiPath Activities Overview;
+6. the official UiPath NuGet feed.
 
-Consulte [references/official-sources.md](references/official-sources.md) para os links e critérios completos.
+See [references/official-sources.md](references/official-sources.md) for the complete source map and evidence rules.
 
-## Limitações
+## Limitations
 
-- O catálogo UiPath muda continuamente; por isso, versões não ficam congeladas no `SKILL.md`.
-- Algumas atividades do Integration Service são atualizadas e distribuídas de maneira diferente dos pacotes clássicos.
-- Uma atividade pode ter compatibilidade mais restrita que o pacote no qual está incluída.
-- A geração de XAML sem os arquivos e dependências do projeto deve ser tratada como rascunho.
-- A skill não publica processos nem executa alterações no Orchestrator sem autorização explícita.
+- The UiPath catalog changes continuously, so versions are intentionally not frozen in `SKILL.md`.
+- Integration Service activities can follow a different update and distribution model from classic activity packages.
+- Individual activities can have narrower compatibility than their containing package.
+- XAML generated without the project's files and dependencies must be treated as a draft.
+- The skill does not publish processes or modify Orchestrator without explicit authorization.
 
-## Desenvolvimento e validação
+## Development and validation
 
-Para verificar a sintaxe do script:
+Validate the Python script:
 
 ```bash
 python -m py_compile scripts/query_uipath_feed.py
 ```
 
-Para testar uma consulta real:
+Run a real feed query:
 
 ```bash
 python scripts/query_uipath_feed.py package UiPath.Excel.Activities
 ```
 
-Os cenários de validação ficam em [evals/evals.json](evals/evals.json).
+Evaluation scenarios are available in [evals/evals.json](evals/evals.json).
 
-## Contribuindo
+## Contributing
 
-Contribuições são bem-vindas, especialmente para:
+Contributions are welcome, especially for:
 
-- ampliar o mapa funcional de pacotes;
-- adicionar casos de teste;
-- melhorar instruções de compatibilidade;
-- corrigir links oficiais alterados;
-- aprimorar o script de consulta ao feed.
+- expanding the functional package map;
+- adding evaluation scenarios;
+- improving compatibility guidance;
+- fixing changed official links;
+- improving the feed query script.
 
-Ao contribuir:
+When contributing:
 
-1. mantenha o escopo limitado a pacotes oficiais;
-2. use documentação oficial como fonte;
-3. não fixe uma versão como “atual” sem data e evidência;
-4. valide o script;
-5. adicione ou atualize casos de teste quando alterar comportamento.
+1. keep recommendations limited to official UiPath packages;
+2. use official documentation as evidence;
+3. do not label a version as current without a date and evidence;
+4. validate the script;
+5. add or update evaluations when behavior changes.
 
-## Licença
+## License
 
-Este projeto é distribuído sob os termos da licença presente em [LICENSE](LICENSE).
+This project is distributed under the terms in [LICENSE](LICENSE).
 
